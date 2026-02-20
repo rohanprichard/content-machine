@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Any, Optional
 from datetime import datetime
 from pydantic import BaseModel
 
@@ -13,17 +13,12 @@ class Message(BaseModel):
 
 
 class BaseChannel(ABC):
-    """
-    Abstract base class that defines the contract for all communication channels.
-    """
-    
     def __init__(self) -> None:
         self.is_connected = False
-        self.client = None
 
     @abstractmethod
-    async def connect(self) -> bool:
-        """Establish connection to the channel provider."""
+    async def start(self) -> None:
+        """Initialize the connection and keep it alive."""
         pass
 
     @abstractmethod
@@ -33,5 +28,5 @@ class BaseChannel(ABC):
 
     @abstractmethod
     async def on_message(self, message: Message) -> bool:
-        """Handle an incoming message."""
+        """Action to perform when a message is received."""
         pass

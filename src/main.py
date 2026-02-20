@@ -1,5 +1,5 @@
-from src.server import app
 import uvicorn
+from src.server import app
 from src.settings import get_settings
 
 
