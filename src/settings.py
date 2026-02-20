@@ -1,37 +1,32 @@
-from pydantic_settings import BaseSettings
-import os
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import Field, field_validator
 
 
 class Settings(BaseSettings):
     app_name: str = "Content Machine"
     host: str = "0.0.0.0"
     port: int = 8000
-    discord_token: str | None = None
+    reload: bool = False
 
-    def _load_env_variables(self):
-        self.app_name = os.getenv("APP_NAME", self.app_name)
-        self.host = os.getenv("HOST", self.host)
-        self.port = os.getenv("PORT", self.port)
-        self.discord_token = os.getenv("DISCORD_TOKEN", self.discord_token)
+    discord_token: str = Field(..., alias="DISCORD_TOKEN")
 
-    def _validate_env_variables(self):
-        if not self.discord_token:
+    @field_validator("discord_token")
+    @classmethod
+    def check_token_exists(cls, v):
+        if not v:
             raise ValueError("DISCORD_TOKEN is not set")
-    
-    def __init__(self):
-        self._load_env_variables()
-        self._validate_env_variables()
-        super().__init__()
-    
-    class Config:
-        env_file = ".env"
-        extra = "ignore"
+        return v
 
-settings = None
+    model_config = SettingsConfigDict(
+        env_file=".env", 
+        extra="ignore"
+    )
 
+
+_settings = None
 
 def get_settings():
-    global settings
-    if settings is None:
-        settings = Settings()
-    return settings
+    global _settings
+    if _settings is None:
+        _settings = Settings()
+    return _settings

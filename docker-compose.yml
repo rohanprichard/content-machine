@@ -11,3 +11,4 @@ services:
       - APP_NAME=${APP_NAME}
       - HOST=${HOST}
       - PORT=${PORT}
+      - DISCORD_TOKEN=${DISCORD_TOKEN}

@@ -1,13 +1,14 @@
-from server import app
+from src.server import app
 import uvicorn
-from settings import get_settings
+from src.settings import get_settings
 
 
 settings = get_settings()
 
 if __name__ == "__main__":
     uvicorn.run(
-        "main:app",
+        "src.main:app",
         host=settings.host,
-        port=settings.port
+        port=settings.port,
+        reload=settings.reload
     )

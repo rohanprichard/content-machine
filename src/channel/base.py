@@ -1,15 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import Any, List, Optional
+from typing import Optional
 from datetime import datetime
 from pydantic import BaseModel
-
-
-class ChannelConfig(BaseModel):
-    """Configuration data for a channel instance"""
-    id: str
-    name: str
-    type: str
-    credentials: dict
 
 
 class Message(BaseModel):
@@ -25,8 +17,7 @@ class BaseChannel(ABC):
     Abstract base class that defines the contract for all communication channels.
     """
     
-    def __init__(self, config: ChannelConfig) -> None:
-        self.config = config
+    def __init__(self) -> None:
         self.is_connected = False
         self.client = None
 
