@@ -20,10 +20,7 @@ class DiscordChannel(Client, BaseChannel):
 
     async def connect_on_startup(self) -> None:
         logger.info("starting discord channel")
-        async with self:
-            await Client.start(
-                self, token=settings.discord_token.get_secret_value(), reconnect=True
-            )
+        await self.start(token=settings.discord_token.get_secret_value(), reconnect=True)
 
     async def on_ready(self):
         self.is_connected = True

@@ -12,6 +12,7 @@ services:
       - HOST=${HOST}
       - PORT=${PORT}
       - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - MONGODB_URI=mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@mongodb:27017/
 
   mongodb:
     image: mongo:latest
@@ -22,8 +23,9 @@ services:
       - 27017:27017
     volumes:
       - mongodb_data:/data/db
-    logging:
-      driver: "none"
+    command: [ "--quiet" ]
+    attach: false
+
   mongo-express:
     image: mongo-express
     ports:
@@ -31,11 +33,10 @@ services:
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGODB_USERNAME}
       - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGODB_PASSWORD}
-      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_URL=mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@mongodb:27017/
     depends_on:
       - mongodb
-    logging:
-      driver: "none"
+    attach: false
 
 volumes:
   mongodb_data:

@@ -8,11 +8,11 @@ from src.channel.discord import DiscordChannel
 async def lifespan(app: FastAPI):
 
     app.state.discord_channel = DiscordChannel()
-    bot_task = asyncio.create_task(app.state.discord_channel.start())
+    bot_task = asyncio.create_task(app.state.discord_channel.connect_on_startup())
 
     yield
 
-    await app.state.discord_channel.disconnect()
+    await app.state.discord_channel.disconnect_on_shutdown()
     bot_task.cancel()
 
 

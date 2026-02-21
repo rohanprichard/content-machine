@@ -12,7 +12,7 @@ class MongoDBManager:
     def get_client(cls) -> AsyncIOMotorClient:
         if cls.client is None:
             logger.info("initializing mongodb connection")
-            cls.client = AsyncIOMotorClient(settings.mongodb_uri)
+            cls.client = AsyncIOMotorClient(settings.mongodb_uri.get_secret_value())
         return cls.client
 
     @classmethod

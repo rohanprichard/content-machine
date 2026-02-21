@@ -14,6 +14,5 @@ async def process_message(message: Message, channel_type: str) -> None:
     try:
         db_msg = DBMessage.from_channel_message(message, channel_type=channel_type)
         msg_id = await save_message(db_msg.model_dump(by_alias=True, exclude_none=True))
-        logger.info(f"Persisted message to DB with id {msg_id}")
     except Exception as e:
         logger.error(f"Failed to persist message: {e}")
