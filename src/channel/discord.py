@@ -29,23 +29,19 @@ class DiscordChannel(Client, BaseChannel):
     async def on_message(self, discord_message: Message) -> bool:  # type: ignore[override]
         if discord_message.author == self.user:
             return False
-        async with discord_message.channel.typing():
-            logger.info(
-                f"message received from user: {discord_message.author.name}: {discord_message.content}"
-            )
 
+        async with discord_message.channel.typing():
+            logger.info(f"message received from user: {discord_message.author.name}")
             standard_msg = NormalizedMessage(
                 content=discord_message.content,
                 sender_id=str(discord_message.author.id),
                 metadata={
                     "channel_id": discord_message.channel.id,
-                    "guild_id": (
-                        discord_message.guild.id if discord_message.guild else None
-                    ),
+                    "guild_id": discord_message.guild.id if discord_message.guild else None,
                 },
             )
-            await process_message(standard_msg, channel_type="discord")
-            await discord_message.channel.send(standard_msg.content)
+            reply = await process_message(standard_msg, channel_type="discord")
+            await discord_message.channel.send(reply.content)
             return True
         return False
 

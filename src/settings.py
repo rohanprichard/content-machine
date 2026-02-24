@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import Field, SecretStr, field_validator
+from uuid import uuid4
 import logging
 
 
@@ -42,3 +43,7 @@ def get_logger():
         _logger.setLevel(logging.INFO)
         _logger.addHandler(logging.StreamHandler())
     return _logger
+
+
+def get_uuid():
+    return str(uuid4())
