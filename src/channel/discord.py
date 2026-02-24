@@ -4,6 +4,7 @@ from src.settings import get_settings, get_logger
 from src.channel.base import BaseChannel, Message as NormalizedMessage
 from src.channel.utils import process_message
 
+
 settings = get_settings()
 logger = get_logger()
 

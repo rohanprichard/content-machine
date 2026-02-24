@@ -1,6 +1,7 @@
 from src.memory.main import MongoDBManager
 from src.settings import get_logger
 
+
 logger = get_logger()
 
 

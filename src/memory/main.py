@@ -1,4 +1,5 @@
 from motor.motor_asyncio import AsyncIOMotorClient
+
 from src.settings import get_settings, get_logger
 
 

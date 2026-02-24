@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 from src.settings import get_logger
 
+
 logger = get_logger()
 
 
