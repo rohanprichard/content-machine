@@ -40,9 +40,12 @@ class DiscordChannel(Client, BaseChannel):
                     "guild_id": discord_message.guild.id if discord_message.guild else None,
                 },
             )
+
             reply = await process_message(standard_msg, channel_type="discord")
             await discord_message.channel.send(reply.content)
+
             return True
+
         return False
 
     async def disconnect_on_shutdown(self) -> None:
