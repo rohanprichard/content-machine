@@ -11,20 +11,20 @@ class MongoDBManager:
     client: AsyncIOMotorClient | None = None
 
     @classmethod
-    def get_client(cls) -> AsyncIOMotorClient:
-        if cls.client is None:
+    def get_client(self) -> AsyncIOMotorClient:
+        if self.client is None:
             logger.info("initializing mongodb connection")
-            cls.client = AsyncIOMotorClient(settings.mongodb_uri.get_secret_value())
-        return cls.client
+            self.client = AsyncIOMotorClient(settings.mongodb_uri.get_secret_value())
+        return self.client
 
     @classmethod
-    def get_database(cls):
-        client = cls.get_client()
+    def get_database(self):
+        client = self.get_client()
         return client[settings.mongodb_database_name]
 
     @classmethod
-    def close(cls):
-        if cls.client:
-            cls.client.close()
-            cls.client = None
+    def close(self):
+        if self.client:
+            self.client.close()
+            self.client = None
             logger.info("mongodb connection closed")

@@ -21,6 +21,8 @@ async def read_messages(channel_type: str = "discord") -> list:
     Read all messages from the database.
     """
     db = MongoDBManager.get_database()
+
     collection = db.messages
     cursor = collection.find()
+    
     return [doc for doc in cursor]
